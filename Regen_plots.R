@@ -35,7 +35,9 @@ pv <- signif(wc$p.value, digits=4)
 
 
 # spine plot
+pdf(file = "spineplot.pdf", width = 6, height = 6)
 spineplot(df2$Treatment, factor(df2$Stage), col = c("gray50",  "blue", "aliceblue", "steelblue", "cornflowerblue"))
+dev.off()
 
 # Heatmap
 runningcounts.df <- as.data.frame(table(df2$Treatment, df2$Stage))
@@ -49,13 +51,16 @@ Treat$Prop <- Treat$Freq/sum(Treat$Freq)
 
 ConTreat <- rbind(Con, Treat)
 
-ggplot(ConTreat, aes(Treatment, Stage)) +
+g1 <- ggplot(ConTreat, aes(Treatment, Stage)) +
   geom_tile(aes(fill = Prop), colour = "black") +
   scale_y_discrete(expand=c(0,1)) +
   scale_fill_gradient(low = "white", high = "steelblue") +
   annotate("text", x = c("Treated"), y = 4.55, label = c(paste(sig)), size=8) +
   annotate("text", x = c("Treated"), y = 4.8, label = c(paste(pv)))
-
+g1
+pdf(file = "spineplot.pdf", width = 6, height = 6)
+g1
+dev.off()
 
 #grid
 theme_nogrid <- function (base_size = 12, base_family = "") {
@@ -63,13 +68,17 @@ theme_nogrid <- function (base_size = 12, base_family = "") {
     theme(panel.grid = element_blank())   
 }
 
-ggplot(ConTreat, aes(Treatment, Stage)) +
+g2 <- ggplot(ConTreat, aes(Treatment, Stage)) +
   geom_point(aes(size = Freq, color = Prop, stat = "identity", position = "identity"), shape = 16) + #use shape = 15 for squares
   scale_size_continuous(range = c(3,15)) + 
   scale_color_gradient(low = "white", high = "steelblue") +
   annotate("text", x = c("Treated"), y = 4.25, label = c(paste(sig)), size=8) +
   annotate("text", x = c("Treated"), y = 4.5, label = c(paste(pv)))
 theme_nogrid()
+g2
+pdf(file = "spineplot.pdf", width = 6, height = 6)
+g2
+dev.off()
 
 #google river
 ## Uncomment the next 3 lines to install the developer version of googleVis
@@ -98,7 +107,7 @@ plot(
                sankey=opts)))
 
 #violin plot
-g1 <- ggplot(df2, aes(x = Treatment, y = Stage, fill=factor(Treatment))) +
+g3 <- ggplot(df2, aes(x = Treatment, y = Stage, fill=factor(Treatment))) +
   geom_violin(adjust = 0.5) +
   #geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.1, stackratio = 0.8, dotsize =0.5, fill = 'grey') +
   scale_y_continuous(limits=c(0,4.5)) +
@@ -106,4 +115,8 @@ g1 <- ggplot(df2, aes(x = Treatment, y = Stage, fill=factor(Treatment))) +
                geom = "crossbar", width = 0.5) +
   geom_text(data = label, label = c(paste(sig)), size = 4) +
   annotate("text", x = c("Treated"), y = 4.3, label = c(paste(pv)))
-g1
+g3
+pdf(file = "spineplot.pdf", width = 6, height = 6)
+g3
+dev.off()
+
