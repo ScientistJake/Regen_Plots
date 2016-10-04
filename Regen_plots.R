@@ -51,7 +51,6 @@ Treat$Prop <- Treat$Freq/sum(Treat$Freq)
 
 ConTreat <- rbind(Con, Treat)
 
-pdf(file = "heatmap.pdf", width = 6, height = 6)
 g1 <- ggplot(ConTreat, aes(Treatment, Stage)) +
   geom_tile(aes(fill = Prop), colour = "black") +
   scale_y_discrete(expand=c(0,1)) +
