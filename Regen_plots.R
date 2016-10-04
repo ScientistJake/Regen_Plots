@@ -51,15 +51,13 @@ Treat$Prop <- Treat$Freq/sum(Treat$Freq)
 
 ConTreat <- rbind(Con, Treat)
 
-g1 <- ggplot(ConTreat, aes(Treatment, Stage)) +
+pdf(file = "heatmap.pdf", width = 6, height = 6)
+ggplot(ConTreat, aes(Treatment, Stage)) +
   geom_tile(aes(fill = Prop), colour = "black") +
   scale_y_discrete(expand=c(0,1)) +
   scale_fill_gradient(low = "white", high = "steelblue") +
   annotate("text", x = c("Treated"), y = 4.55, label = c(paste(sig)), size=8) +
   annotate("text", x = c("Treated"), y = 4.8, label = c(paste(pv)))
-g1
-pdf(file = "heatmap.pdf", width = 6, height = 6)
-g1
 dev.off()
 
 #grid
