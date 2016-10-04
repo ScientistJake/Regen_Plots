@@ -57,10 +57,7 @@ g1 <- ggplot(ConTreat, aes(Treatment, Stage)) +
   scale_fill_gradient(low = "white", high = "steelblue") +
   annotate("text", x = c("Treated"), y = 4.55, label = c(paste(sig)), size=8) +
   annotate("text", x = c("Treated"), y = 4.8, label = c(paste(pv)))
-g1
-pdf(file = "heatmap.pdf", width = 6, height = 6)
-g1
-dev.off()
+ggsave(file = "heatmap.pdf", g1)
 
 #grid
 theme_nogrid <- function (base_size = 12, base_family = "") {
@@ -75,10 +72,7 @@ g2 <- ggplot(ConTreat, aes(Treatment, Stage)) +
   annotate("text", x = c("Treated"), y = 4.25, label = c(paste(sig)), size=8) +
   annotate("text", x = c("Treated"), y = 4.5, label = c(paste(pv)))
 theme_nogrid()
-g2
-pdf(file = "gridplot.pdf", width = 6, height = 6)
-g2
-dev.off()
+ggsave(file = "heatmap.pdf", g2)
 
 #google river
 ## Uncomment the next 3 lines to install the developer version of googleVis
@@ -115,8 +109,5 @@ g3 <- ggplot(df2, aes(x = Treatment, y = Stage, fill=factor(Treatment))) +
                geom = "crossbar", width = 0.5) +
   geom_text(data = label, label = c(paste(sig)), size = 4) +
   annotate("text", x = c("Treated"), y = 4.3, label = c(paste(pv)))
-g3
-pdf(file = "violingplot.pdf", width = 6, height = 6)
-g3
-dev.off()
+ggsave(file = "heatmap.pdf", g3)
 
