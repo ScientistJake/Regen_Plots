@@ -74,6 +74,17 @@ g2 <- ggplot(ConTreat, aes(Treatment, Stage)) +
 theme_nogrid()
 ggsave(file = "gridplot.pdf", g2)
 
+#violin plot
+g3 <- ggplot(df2, aes(x = Treatment, y = Stage, fill=factor(Treatment))) +
+  geom_violin(adjust = 0.5) +
+  #geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.1, stackratio = 0.8, dotsize =0.5, fill = 'grey') +
+  scale_y_continuous(limits=c(0,4.5)) +
+  stat_summary(fun.y = 'mean', fun.ymin = 'mean', fun.ymax = 'mean',
+               geom = "crossbar", width = 0.5) +
+  geom_text(data = label, label = c(paste(sig)), size = 4) +
+  annotate("text", x = c("Treated"), y = 4.3, label = c(paste(pv)))
+ggsave(file = "violinplot.pdf", g3)
+
 #google river
 ## Uncomment the next 3 lines to install the developer version of googleVis
 #install.packages(c("devtools","RJSONIO", "knitr", "shiny", "httpuv"))
@@ -99,15 +110,3 @@ plot(
              options=list(
                height=250,
                sankey=opts)))
-
-#violin plot
-g3 <- ggplot(df2, aes(x = Treatment, y = Stage, fill=factor(Treatment))) +
-  geom_violin(adjust = 0.5) +
-  #geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 0.1, stackratio = 0.8, dotsize =0.5, fill = 'grey') +
-  scale_y_continuous(limits=c(0,4.5)) +
-  stat_summary(fun.y = 'mean', fun.ymin = 'mean', fun.ymax = 'mean',
-               geom = "crossbar", width = 0.5) +
-  geom_text(data = label, label = c(paste(sig)), size = 4) +
-  annotate("text", x = c("Treated"), y = 4.3, label = c(paste(pv)))
-ggsave(file = "violinplot.pdf", g3)
-
