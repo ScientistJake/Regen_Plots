@@ -1,0 +1,27 @@
+setwd("~/Desktop")
+
+require(ggplot2)
+df2 <- read.table(file='data-2.txt', sep = '\t', header =T )
+
+levels(df2$Treatment) <- c("Control", "Treated")
+t <- t.test(df2$Edu.Count~df2$Treatment)
+
+pv <- signif(t$p.value, digits=4)
+
+if (t$p.value < 0.05) {
+  sig <- c("*")
+} else {
+  sig <- c("NS")
+}
+
+
+label <- data.frame(Treatment = c("Treated"),
+                    Edu.Count = c(125))
+p <- ggplot(df2, aes(x = Treatment, y = Edu.Count)) +
+  geom_jitter(width = 0.2, height = NULL, size = 4) +
+  stat_summary(fun.y = 'mean', fun.ymin = 'mean', fun.ymax = 'mean',
+               geom = "crossbar", width = 0.5, color = "red") +
+  geom_text(data = label, label = c(paste(sig)), size = 8) +
+  annotate("text", x = c("Treated"), y = 115, label = c(paste(pv)))
+p
+ggsave(file = "edu_count.pdf", p)
