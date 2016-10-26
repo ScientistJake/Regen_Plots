@@ -1,7 +1,7 @@
 setwd("~/Desktop")
 
 require(ggplot2)
-df2 <- read.table(file='data-2.txt', sep = '\t', header =T )
+df2 <- read.table(file='data.txt', sep = '\t', header =T )
 
 levels(df2$Treatment) <- c("Control", "Treated")
 t <- t.test(df2$Edu.Count~df2$Treatment)
